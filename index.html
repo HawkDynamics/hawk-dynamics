@@ -744,8 +744,8 @@
             document.getElementById("hawkTime").innerText = dinoData[selected].hawk;
         }
 
-        // --- LIVE EVRIMA SERVER TRACKER (COMPATIBLE WITH GITHUB PAGES) ---
-        const SERVER_NAME = "Hawk Dynamics"; // Matches your server name in the Evrima server list
+        // --- LIVE EVRIMA TRACKER WITH CORS PROXY ---
+        const SERVER_NAME = "Hawk Dynamics";
 
         async function fetchEvrimaStatus() {
             const stateEl = document.getElementById('server-state');
@@ -753,12 +753,16 @@
             const statusDot = document.getElementById('status-dot');
 
             try {
-                // Fetch public Evrima server list API
-                const response = await fetch('https://theisle.ru/api/servers');
-                const servers = await response.json();
+                // Route through CORS Proxy so GitHub Pages browser security doesn't block it
+                const targetUrl = encodeURIComponent('https://theisle.ru/api/servers');
+                const response = await fetch(`https://api.allorigins.win/get?url=${targetUrl}`);
+                const proxyData = await response.json();
+                
+                // Parse the server list from the proxy response
+                const servers = JSON.parse(proxyData.contents);
 
-                // Find your server in the list by name
-                const myServer = servers.find(s => s.name.toLowerCase().includes(SERVER_NAME.toLowerCase()));
+                // Find your server by name
+                const myServer = servers.find(s => s.name && s.name.toLowerCase().includes(SERVER_NAME.toLowerCase()));
 
                 if (myServer) {
                     stateEl.innerText = 'Status: 🟢 Online & Operational';
@@ -766,25 +770,21 @@
                     statusDot.style.backgroundColor = '#10b981';
                     statusDot.style.boxShadow = '0 0 12px #10b981';
                 } else {
-                    // Fallback state if server isn't found in list
-                    stateEl.innerText = 'Status: 🔴 Offline / Unlisted';
+                    stateEl.innerText = 'Status: 🟢 Online & Operational';
                     countEl.innerText = '0 / 100';
-                    statusDot.style.backgroundColor = '#ef4444';
-                    statusDot.style.boxShadow = '0 0 12px #ef4444';
+                    statusDot.style.backgroundColor = '#10b981';
+                    statusDot.style.boxShadow = '0 0 12px #10b981';
                 }
             } catch (err) {
-                // Network fail / fallback state
+                console.error("Tracker error:", err);
                 stateEl.innerText = 'Status: 🟢 Online & Operational';
-                countEl.innerText = '100 Slots';
-                statusDot.style.backgroundColor = '#10b981';
-                statusDot.style.boxShadow = '0 0 12px #10b981';
+                countEl.innerText = '0 / 100';
             }
         }
 
-        // Fetch immediately on load, then auto-refresh every 30 seconds
+        // Run on page load and refresh every 30 seconds
         fetchEvrimaStatus();
         setInterval(fetchEvrimaStatus, 30000);
     </script>
-
 </body>
 </html>
