@@ -5,17 +5,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Hawk Dynamics | The Isle Evrima Server</title>
   <style>
-    /* Global Styles */
+    /* CSS Variables & Global Theme */
     :root {
-      --bg-color: #0f0f12;
-      --card-bg: #1a1a20;
-      --accent-color: #43b581;
-      --text-main: #f0f0f5;
-      --text-muted: #a0a0b0;
-      --border-color: #2a2a35;
-      --brand-blue: #7289da;
+      --bg-color: #0d0e12;
+      --card-bg: #16171d;
+      --card-border: #242631;
+      --accent-green: #43b581;
+      --accent-blue: #7289da;
+      --accent-gold: #f1c40f;
       --charity-red: #e74c3c;
-      --gold: #f1c40f;
+      --text-main: #f0f0f5;
+      --text-muted: #9598a6;
+    }
+
+    * {
+      box-sizing: border-box;
     }
 
     body {
@@ -27,57 +31,109 @@
       line-height: 1.6;
     }
 
-    header {
-      text-align: center;
-      padding: 60px 20px 30px;
-      background: linear-gradient(180deg, #141419 0%, var(--bg-color) 100%);
+    /* Navigation Bar */
+    nav {
+      background-color: #111217;
+      border-bottom: 1px solid var(--card-border);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      padding: 15px 20px;
     }
 
-    header h1 {
-      font-size: 3rem;
-      margin-bottom: 10px;
+    .nav-container {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 1.4rem;
+      font-weight: bold;
+      color: #fff;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+
+    .logo span {
+      color: var(--accent-green);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 20px;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: #fff;
+    }
+
+    /* Hero Section */
+    .hero {
+      text-align: center;
+      padding: 80px 20px 40px;
+      background: radial-gradient(circle at center, #1b1e2a 0%, var(--bg-color) 70%);
+    }
+
+    .hero h1 {
+      font-size: 3.2rem;
+      margin: 0 0 10px;
       color: #fff;
       letter-spacing: 2px;
     }
 
-    header p {
+    .hero p {
       color: var(--text-muted);
-      font-size: 1.2rem;
-      max-width: 650px;
-      margin: 0 auto;
+      font-size: 1.25rem;
+      max-width: 700px;
+      margin: 0 auto 30px;
     }
 
     .container {
-      max-width: 950px;
+      max-width: 1100px;
       margin: 0 auto;
       padding: 20px;
     }
 
-    /* Cards Layout */
+    /* Cards & Layout */
     .card {
       background: var(--card-bg);
-      border: 1px solid var(--border-color);
+      border: 1px solid var(--card-border);
       border-radius: 12px;
-      padding: 28px;
-      margin-bottom: 24px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+      padding: 30px;
+      margin-bottom: 30px;
+      box-shadow: 0 4px 25px rgba(0,0,0,0.4);
     }
 
     .card h2 {
       margin-top: 0;
-      font-size: 1.6rem;
+      font-size: 1.8rem;
       color: #fff;
-      border-bottom: 1px solid var(--border-color);
-      padding-bottom: 10px;
+      border-bottom: 1px solid var(--card-border);
+      padding-bottom: 12px;
+      margin-bottom: 20px;
     }
 
-    /* Server Status Card */
+    /* Server Tracker Box */
     .status-header {
       display: flex;
       align-items: center;
       gap: 12px;
       margin-bottom: 20px;
-      border-bottom: 1px solid var(--border-color);
+      border-bottom: 1px solid var(--card-border);
       padding-bottom: 12px;
     }
 
@@ -85,8 +141,8 @@
       width: 14px;
       height: 14px;
       border-radius: 50%;
-      background-color: var(--accent-color);
-      box-shadow: 0 0 10px var(--accent-color);
+      background-color: var(--accent-green);
+      box-shadow: 0 0 12px var(--accent-green);
     }
 
     .status-header h3 {
@@ -96,38 +152,107 @@
 
     .status-details {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 16px;
-      margin-bottom: 20px;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+      margin-bottom: 24px;
     }
 
     .stat-item {
       display: flex;
       flex-direction: column;
+      background: #111217;
+      padding: 14px;
+      border-radius: 8px;
+      border: 1px solid var(--card-border);
     }
 
     .stat-label {
-      font-size: 0.85rem;
+      font-size: 0.8rem;
       color: var(--text-muted);
       text-transform: uppercase;
       letter-spacing: 0.5px;
     }
 
     .stat-value {
-      font-size: 1.1rem;
+      font-size: 1.15rem;
       font-weight: 600;
       margin-top: 4px;
     }
 
     .copy-ip {
       cursor: pointer;
-      color: var(--brand-blue);
+      color: var(--accent-blue);
       transition: color 0.2s;
     }
 
     .copy-ip:hover {
       text-decoration: underline;
       color: #8ea1e1;
+    }
+
+    /* 50/50 Charity Card */
+    .charity-card {
+      border-left: 5px solid var(--charity-red);
+    }
+
+    .charity-card h3 {
+      margin-top: 0;
+      color: var(--charity-red);
+      font-size: 1.4rem;
+    }
+
+    /* Grids */
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+    }
+
+    .feature-box {
+      background: #111217;
+      padding: 22px;
+      border-radius: 8px;
+      border: 1px solid var(--card-border);
+    }
+
+    .feature-box h4 {
+      margin-top: 0;
+      color: var(--accent-green);
+      font-size: 1.25rem;
+    }
+
+    /* Supporter Tiers */
+    .tier-box {
+      background: #111217;
+      padding: 25px;
+      border-radius: 10px;
+      border: 1px solid var(--card-border);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .tier-box.apex {
+      border-color: var(--accent-gold);
+    }
+
+    .tier-price {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: var(--accent-gold);
+      margin: 10px 0;
+    }
+
+    .tier-features {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 20px;
+    }
+
+    .tier-features li {
+      padding: 6px 0;
+      border-bottom: 1px solid #1c1e28;
+      color: var(--text-muted);
     }
 
     /* Rules List */
@@ -138,8 +263,9 @@
 
     .rules-list li {
       position: relative;
-      padding-left: 28px;
-      margin-bottom: 14px;
+      padding-left: 30px;
+      margin-bottom: 16px;
+      font-size: 1.05rem;
     }
 
     .rules-list li::before {
@@ -149,40 +275,21 @@
       top: 0;
     }
 
-    /* Features Grid */
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 20px;
-    }
-
-    .feature-box {
-      background: #141419;
-      padding: 20px;
-      border-radius: 8px;
-      border: 1px solid var(--border-color);
-    }
-
-    .feature-box h4 {
-      margin-top: 0;
-      color: var(--accent-color);
-      font-size: 1.2rem;
-    }
-
     /* Buttons */
     .btn-group {
       display: flex;
-      gap: 12px;
+      gap: 14px;
       flex-wrap: wrap;
     }
 
     .btn {
       display: inline-block;
-      padding: 12px 24px;
+      padding: 12px 26px;
       border-radius: 6px;
       text-decoration: none;
       font-weight: bold;
       transition: background 0.2s, transform 0.1s;
+      text-align: center;
     }
 
     .btn:active {
@@ -190,7 +297,7 @@
     }
 
     .btn-primary {
-      background: var(--accent-color);
+      background: var(--accent-green);
       color: #fff;
     }
 
@@ -199,7 +306,7 @@
     }
 
     .btn-discord {
-      background: var(--brand-blue);
+      background: var(--accent-blue);
       color: #fff;
     }
 
@@ -207,23 +314,13 @@
       background: #5b6eae;
     }
 
-    .btn-store {
-      background: var(--gold);
+    .btn-gold {
+      background: var(--accent-gold);
       color: #111;
     }
 
-    .btn-store:hover {
+    .btn-gold:hover {
       background: #d4ac0d;
-    }
-
-    /* Charity Pledge Banner */
-    .charity-card {
-      border-left: 4px solid var(--charity-red);
-    }
-
-    .charity-card h3 {
-      margin-top: 0;
-      color: var(--charity-red);
     }
 
     footer {
@@ -231,25 +328,41 @@
       padding: 40px 20px;
       color: var(--text-muted);
       font-size: 0.9rem;
-      border-top: 1px solid var(--border-color);
-      margin-top: 40px;
+      border-top: 1px solid var(--card-border);
+      margin-top: 50px;
+      background: #090a0d;
     }
   </style>
 </head>
 <body>
 
-  <header>
+  <!-- NAVIGATION -->
+  <nav>
+    <div class="nav-container">
+      <div class="logo">Hawk <span>Dynamics</span></div>
+      <ul class="nav-links">
+        <li><a href="#status">Status & IP</a></li>
+        <li><a href="#charity">Charity</a></li>
+        <li><a href="#features">Features</a></li>
+        <li><a href="#rules">Rules</a></li>
+        <li><a href="#supporters">Supporters</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- HERO SECTION -->
+  <header class="hero">
     <h1>HAWK DYNAMICS</h1>
-    <p>The Isle: Evrima Community Server | 1.5x Growth | Semi-Realism</p>
+    <p>The Isle: Evrima Dedicated Server | 1.5x Growth | Semi-Realism | US East</p>
   </header>
 
   <div class="container">
 
-    <!-- 🟢 1. LIVE SERVER TRACKER CARD -->
-    <div class="card" id="server-status-card">
+    <!-- 🟢 1. LIVE SERVER TRACKER & DIRECT CONNECT -->
+    <div class="card" id="status">
       <div class="status-header">
         <span class="status-indicator" id="status-dot"></span>
-        <h3 id="server-title">[US] Hawk Dynamics</h3>
+        <h3 id="server-title">[US] Hawk Dynamics | 1.5x Growth | Semi-Realism</h3>
       </div>
       
       <div class="status-details">
@@ -275,78 +388,97 @@
 
       <div class="btn-group">
         <a href="steam://connect/38.103.249.202:27507" class="btn btn-primary">Direct Connect via Steam</a>
-        <a href="YOUR_DISCORD_INVITE_LINK_HERE" class="btn btn-discord" target="_blank">Join Discord</a>
-        <a href="https://hawk-dynamics.tebex.io" class="btn btn-store" target="_blank">Supporter Store</a>
+        <a href="YOUR_DISCORD_INVITE_LINK_HERE" class="btn btn-discord" target="_blank">Join Discord Community</a>
+        <a href="https://hawk-dynamics.tebex.io" class="btn btn-gold" target="_blank">Supporter Webstore</a>
       </div>
     </div>
 
-    <!-- ❤️ 2. CHARITY PLEDGE BANNER -->
-    <div class="card charity-card">
+    <!-- ❤️ 2. 50/50 CHARITY PLEDGE -->
+    <div class="card charity-card" id="charity">
       <h3>❤️ 50/50 Charity & Community Pledge</h3>
       <p>
-        At Hawk Dynamics, transparency is our top priority. <strong>50% of all supporter proceeds</strong> directly fund high-performance CPU hardware upgrades, server hosting costs, and DDoS protection.
+        Transparency is our foundation at Hawk Dynamics. <strong>50% of all store proceeds</strong> are dedicated directly to covering server hardware hosting, enterprise single-core CPU power, and high-level DDoS mitigation.
       </p>
       <p>
-        The remaining <strong>50% is donated directly to charitable causes</strong> at the end of every month. Proof of donation receipts is publicly posted in our Discord server!
+        The remaining <strong>50% is donated directly to charity</strong> at the end of every single month. Public proof of donation receipts and community voting on target charities take place in our Discord!
       </p>
     </div>
 
-    <!-- ✨ 3. SERVER FEATURES GRID -->
-    <div class="card">
+    <!-- ✨ 3. SERVER FEATURES -->
+    <div class="card" id="features">
       <h2>Server Features</h2>
-      <div class="grid">
+      <div class="grid-3">
         <div class="feature-box">
-          <h4>⚡ 1.5x Growth Speed</h4>
-          <p>Enjoy faster progression without skipping the survival challenge. Balanced for active play styles.</p>
+          <h4>⚡ 1.5x Growth Multiplier</h4>
+          <p>Carefully balanced growth rates allow you to experience adult dinosaur mechanics without spending entire days growing single specimens.</p>
         </div>
         <div class="feature-box">
-          <h4>🌿 Semi-Realism Rules</h4>
-          <p>Immersive gameplay with minimal restrictions. Fair pack sizes, diet-focused gameplay, and balanced combat.</p>
+          <h4>🌿 Semi-Realism Environment</h4>
+          <p>Immersive semi-realism rule set favoring natural territorial behavior, diet-driven hunts, and reasonable pack limits.</p>
         </div>
         <div class="feature-box">
-          <h4>🚀 High Performance Hardware</h4>
-          <p>Hosted on Ryzen 9 7950X hardware in US East for smooth, low-latency, 100-player battles.</p>
+          <h4>🚀 Ryzen 9 Dedicated Hardware</h4>
+          <p>Hosted on dedicated high-frequency CPU cores in US East to maintain high server tick rates during 100-player peak sessions.</p>
         </div>
       </div>
     </div>
 
-    <!-- 📜 4. SERVER RULES SECTION -->
-    <div class="card">
+    <!-- 📜 4. COMMUNITY RULES -->
+    <div class="card" id="rules">
       <h2>Community Rules & Guidelines</h2>
       <ul class="rules-list">
-        <li><strong>Respect Staff & Players:</strong> No toxicity, hate speech, or harassment in-game or in Discord.</li>
-        <li><strong>Pack Limits:</strong> Follow official in-game group caps for your dinosaur species.</li>
-        <li><strong>No Third-Party Mix-Packing:</strong> Carnivores may not assist or pair up with herbivores.</li>
-        <li><strong>Contesting Food:</strong> Aggression around carcasses or water holes is allowed under semi-realism rules.</li>
-        <li><strong>Rule Breaches:</strong> Open a ticket in our Discord with valid video evidence to report rule breaks.</li>
+        <li><strong>Respect & Fair Play:</strong> Zero tolerance for hate speech, targeted harassment, toxic behavior, or cheating.</li>
+        <li><strong>Strict Pack Caps:</strong> Players must adhere to in-game species group limits. Over-grouping is not permitted.</li>
+        <li><strong>No Cross-Species Mix-Packing:</strong> Carnivores and herbivores may not form alliances, defend one another, or hunt together.</li>
+        <li><strong>Food Contesting & Body Baiting:</strong> Carcasses may be contested naturally according to semi-realism engagement rules.</li>
+        <li><strong>Staff Tickets:</strong> Rule violations require video clip evidence submitted via our Discord ticket system for administrative action.</li>
       </ul>
     </div>
 
     <!-- 🌟 5. SUPPORTER TIERS -->
-    <div class="card">
-      <h2>Support the Community</h2>
-      <p>Help keep Hawk Dynamics running lag-free and contribute to our monthly charity donations!</p>
-      <div class="grid">
-        <div class="feature-box">
-          <h4>Hawk Supporter</h4>
-          <p>Exclusive Discord role, supporter badge, and access to private supporter channels.</p>
+    <div class="card" id="supporters">
+      <h2>Supporter Tiers</h2>
+      <p>Support our monthly hardware costs and help fund our monthly charity donations!</p>
+      
+      <div class="grid-3">
+        <div class="tier-box">
+          <div>
+            <h3>Hawk Supporter</h3>
+            <div class="tier-price">$5 / mo</div>
+            <ul class="tier-features">
+              <li>✔ Supporter Role in Discord</li>
+              <li>✔ Access to Supporter Lounge</li>
+              <li>✔ Supporter Name Tag in Discord</li>
+              <li>✔ Monthly Charity Vote Entry</li>
+            </ul>
+          </div>
+          <a href="https://hawk-dynamics.tebex.io" class="btn btn-gold" target="_blank">Get Supporter</a>
         </div>
-        <div class="feature-box">
-          <h4>Apex Supporter</h4>
-          <p>Includes all Supporter perks + Priority Queue bypass access on full server nights.</p>
+
+        <div class="tier-box apex">
+          <div>
+            <h3>Apex Supporter</h3>
+            <div class="tier-price">$12 / mo</div>
+            <ul class="tier-features">
+              <li>✔ Priority Queue Bypass Access</li>
+              <li>✔ Golden Apex Role in Discord</li>
+              <li>✔ Priority Support Ticket Queue</li>
+              <li>✔ All Hawk Supporter Perks Included</li>
+            </ul>
+          </div>
+          <a href="https://hawk-dynamics.tebex.io" class="btn btn-gold" target="_blank">Get Apex Tier</a>
         </div>
       </div>
-      <br>
-      <a href="https://hawk-dynamics.tebex.io" class="btn btn-store" target="_blank">Visit Webstore</a>
     </div>
 
   </div>
 
+  <!-- FOOTER -->
   <footer>
-    <p>&copy; 2026 Hawk Dynamics. Not affiliated with Afterthought LLC or The Isle.</p>
+    <p>&copy; 2026 Hawk Dynamics. All rights reserved. Not affiliated with Afterthought LLC or The Isle.</p>
   </footer>
 
-  <!-- LIVE DATA & COPY SCRIPT -->
+  <!-- SCRIPT -->
   <script>
     // Copy IP to Clipboard
     function copyIP() {
@@ -375,7 +507,7 @@
         
         const statusDot = document.getElementById('status-dot');
         statusDot.style.backgroundColor = attr.status === 'online' ? '#43b581' : '#f04747';
-        statusDot.style.boxShadow = attr.status === 'online' ? '0 0 10px #43b581' : '0 0 10px #f04747';
+        statusDot.style.boxShadow = attr.status === 'online' ? '0 0 12px #43b581' : '0 0 12px #f04747';
       } catch (err) {
         document.getElementById('server-state').innerText = '🟢 Online';
         document.getElementById('player-count').innerText = '100 Slots Available';
