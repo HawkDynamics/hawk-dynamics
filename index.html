@@ -14,6 +14,8 @@
       --text-muted: #a0a0b0;
       --border-color: #2a2a35;
       --brand-blue: #7289da;
+      --charity-red: #e74c3c;
+      --gold: #f1c40f;
     }
 
     body {
@@ -32,21 +34,21 @@
     }
 
     header h1 {
-      font-size: 2.8rem;
+      font-size: 3rem;
       margin-bottom: 10px;
       color: #fff;
-      letter-spacing: 1px;
+      letter-spacing: 2px;
     }
 
     header p {
       color: var(--text-muted);
       font-size: 1.2rem;
-      max-width: 600px;
+      max-width: 650px;
       margin: 0 auto;
     }
 
     .container {
-      max-width: 900px;
+      max-width: 950px;
       margin: 0 auto;
       padding: 20px;
     }
@@ -59,6 +61,14 @@
       padding: 28px;
       margin-bottom: 24px;
       box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+    }
+
+    .card h2 {
+      margin-top: 0;
+      font-size: 1.6rem;
+      color: #fff;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 10px;
     }
 
     /* Server Status Card */
@@ -120,6 +130,45 @@
       color: #8ea1e1;
     }
 
+    /* Rules List */
+    .rules-list {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    .rules-list li {
+      position: relative;
+      padding-left: 28px;
+      margin-bottom: 14px;
+    }
+
+    .rules-list li::before {
+      content: "🦖";
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
+
+    /* Features Grid */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+    }
+
+    .feature-box {
+      background: #141419;
+      padding: 20px;
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+    }
+
+    .feature-box h4 {
+      margin-top: 0;
+      color: var(--accent-color);
+      font-size: 1.2rem;
+    }
+
     /* Buttons */
     .btn-group {
       display: flex;
@@ -159,7 +208,7 @@
     }
 
     .btn-store {
-      background: #f1c40f;
+      background: var(--gold);
       color: #111;
     }
 
@@ -169,12 +218,12 @@
 
     /* Charity Pledge Banner */
     .charity-card {
-      border-left: 4px solid #e74c3c;
+      border-left: 4px solid var(--charity-red);
     }
 
     .charity-card h3 {
       margin-top: 0;
-      color: #e74c3c;
+      color: var(--charity-red);
     }
 
     footer {
@@ -196,7 +245,7 @@
 
   <div class="container">
 
-    <!-- 🟢 LIVE SERVER TRACKER CARD -->
+    <!-- 🟢 1. LIVE SERVER TRACKER CARD -->
     <div class="card" id="server-status-card">
       <div class="status-header">
         <span class="status-indicator" id="status-dot"></span>
@@ -231,15 +280,64 @@
       </div>
     </div>
 
-    <!-- ❤️ CHARITY PLEDGE CARD -->
+    <!-- ❤️ 2. CHARITY PLEDGE BANNER -->
     <div class="card charity-card">
       <h3>❤️ 50/50 Charity & Community Pledge</h3>
       <p>
-        At Hawk Dynamics, transparency is our top priority. <strong>50% of all store proceeds</strong> directly fund high-performance CPU hardware upgrades, server hosting costs, and DDoS protection.
+        At Hawk Dynamics, transparency is our top priority. <strong>50% of all supporter proceeds</strong> directly fund high-performance CPU hardware upgrades, server hosting costs, and DDoS protection.
       </p>
       <p>
         The remaining <strong>50% is donated directly to charitable causes</strong> at the end of every month. Proof of donation receipts is publicly posted in our Discord server!
       </p>
+    </div>
+
+    <!-- ✨ 3. SERVER FEATURES GRID -->
+    <div class="card">
+      <h2>Server Features</h2>
+      <div class="grid">
+        <div class="feature-box">
+          <h4>⚡ 1.5x Growth Speed</h4>
+          <p>Enjoy faster progression without skipping the survival challenge. Balanced for active play styles.</p>
+        </div>
+        <div class="feature-box">
+          <h4>🌿 Semi-Realism Rules</h4>
+          <p>Immersive gameplay with minimal restrictions. Fair pack sizes, diet-focused gameplay, and balanced combat.</p>
+        </div>
+        <div class="feature-box">
+          <h4>🚀 High Performance Hardware</h4>
+          <p>Hosted on Ryzen 9 7950X hardware in US East for smooth, low-latency, 100-player battles.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 📜 4. SERVER RULES SECTION -->
+    <div class="card">
+      <h2>Community Rules & Guidelines</h2>
+      <ul class="rules-list">
+        <li><strong>Respect Staff & Players:</strong> No toxicity, hate speech, or harassment in-game or in Discord.</li>
+        <li><strong>Pack Limits:</strong> Follow official in-game group caps for your dinosaur species.</li>
+        <li><strong>No Third-Party Mix-Packing:</strong> Carnivores may not assist or pair up with herbivores.</li>
+        <li><strong>Contesting Food:</strong> Aggression around carcasses or water holes is allowed under semi-realism rules.</li>
+        <li><strong>Rule Breaches:</strong> Open a ticket in our Discord with valid video evidence to report rule breaks.</li>
+      </ul>
+    </div>
+
+    <!-- 🌟 5. SUPPORTER TIERS -->
+    <div class="card">
+      <h2>Support the Community</h2>
+      <p>Help keep Hawk Dynamics running lag-free and contribute to our monthly charity donations!</p>
+      <div class="grid">
+        <div class="feature-box">
+          <h4>Hawk Supporter</h4>
+          <p>Exclusive Discord role, supporter badge, and access to private supporter channels.</p>
+        </div>
+        <div class="feature-box">
+          <h4>Apex Supporter</h4>
+          <p>Includes all Supporter perks + Priority Queue bypass access on full server nights.</p>
+        </div>
+      </div>
+      <br>
+      <a href="https://hawk-dynamics.tebex.io" class="btn btn-store" target="_blank">Visit Webstore</a>
     </div>
 
   </div>
@@ -257,12 +355,10 @@
     }
 
     // Live BattleMetrics Tracker Fetching
-    // Optional: Replace with your numeric BattleMetrics ID once claimed
     const BM_SERVER_ID = ""; 
 
     async function fetchServerStatus() {
       if (!BM_SERVER_ID) {
-        // Fallback display if BattleMetrics ID isn't linked yet
         document.getElementById('server-state').innerText = '🟢 Online';
         document.getElementById('player-count').innerText = '100 Slots Available';
         return;
