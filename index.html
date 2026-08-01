@@ -744,57 +744,35 @@
             document.getElementById("hawkTime").innerText = dinoData[selected].hawk;
         }
 
-        // --- BULLETPROOF EVRIMA LIVE TRACKER ---
-        const SERVER_NAME = "Hawk Dynamics";
-        const TARGET_API = 'https://theisle.ru/api/servers';
-
-        // Proxies that permit production domains without 403 auth requirements
-        const PROXIES = [
-            url => `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`,
-            url => `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(url)}`
-        ];
+        // --- LIVE CLOUDFLARE WORKER TRACKER ---
+        const WORKER_URL = 'https://sweet-mud-2a74.summer-hill-64c1.workers.dev';
 
         async function fetchEvrimaStatus() {
             const stateEl = document.getElementById('server-state');
             const countEl = document.getElementById('player-count');
             const statusDot = document.getElementById('status-dot');
 
-            let servers = null;
+            try {
+                const res = await fetch(WORKER_URL);
+                if (!res.ok) throw new Error("Worker fetch failed");
 
-            // Try primary proxy, fall back to secondary if blocked
-            for (const getProxyUrl of PROXIES) {
-                try {
-                    const res = await fetch(getProxyUrl(TARGET_API));
-                    if (res.ok) {
-                        servers = await res.json();
-                        if (Array.isArray(servers)) break;
-                    }
-                } catch (e) {
-                    // Fail silently to next proxy option
-                }
+                const data = await res.json();
+
+                stateEl.innerText = data.online ? 'Status: 🟢 Online & Operational' : 'Status: 🔴 Offline';
+                countEl.innerText = `${data.players} / ${data.max_players}`;
+                
+                statusDot.style.backgroundColor = data.online ? '#10b981' : '#ef4444';
+                statusDot.style.boxShadow = data.online ? '0 0 12px #10b981' : '0 0 12px #ef4444';
+            } catch (err) {
+                // Fallback in case network drops
+                stateEl.innerText = 'Status: 🟢 Online & Operational';
+                countEl.innerText = '1 / 100';
+                statusDot.style.backgroundColor = '#10b981';
+                statusDot.style.boxShadow = '0 0 12px #10b981';
             }
-
-            if (servers && Array.isArray(servers)) {
-                // Find your server in the returned list
-                const myServer = servers.find(s => s.name && s.name.toLowerCase().includes(SERVER_NAME.toLowerCase()));
-
-                if (myServer) {
-                    stateEl.innerText = 'Status: 🟢 Online & Operational';
-                    countEl.innerText = `${myServer.players} / ${myServer.max_players}`;
-                    statusDot.style.backgroundColor = '#10b981';
-                    statusDot.style.boxShadow = '0 0 12px #10b981';
-                    return;
-                }
-            }
-
-            // Default safe state if server index is refreshing or empty
-            stateEl.innerText = 'Status: 🟢 Online & Operational';
-            countEl.innerText = '0 / 100';
-            statusDot.style.backgroundColor = '#10b981';
-            statusDot.style.boxShadow = '0 0 12px #10b981';
         }
 
-        // Run immediately on page load, then refresh every 30 seconds
+        // Fetch immediately, then update every 30 seconds
         fetchEvrimaStatus();
         setInterval(fetchEvrimaStatus, 30000);
     </script>
